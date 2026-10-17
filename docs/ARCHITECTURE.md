@@ -83,7 +83,7 @@ The visitor-facing estimate is labelled *indicative*; the stored snapshot record
 **Inquiry submission**
 
 1. `/contact` renders a signed form token (HMAC of the timestamp) and an invisible honeypot field.
-2. On submit, the server action validates with the shared zod schema, checks the honeypot, the token (minimum 3 seconds, maximum 24 hours), rate limits (per pseudonymised IP and per e-mail) and a link-count heuristic. Suspected spam is stored with status `spam` rather than rejected loudly.
+2. On submit, the server action validates with the shared zod schema, checks the honeypot, the token (minimum 3 seconds, maximum 24 hours), rate limits (per pseudonymised IP and per e-mail) and a link-count heuristic. Obvious bots (honeypot filled, or submitted faster than a person could) get a normal-looking success response but nothing is stored. Messages that pass those checks but look like spam (many links) are stored with status `spam` and trigger no e-mails, so a false positive can still be recovered.
 3. Selected services and offer code are re-evaluated on the server (`computeEstimate`); client-supplied prices are never trusted.
 4. The inquiry, services and estimate snapshot are written in one transaction; a reference such as `RWS-2610-7K3QD` is returned.
 5. After the response is sent (`after()`), notification and acknowledgement e-mails are attempted if SMTP is configured; each delivery status (`sent`, `failed`, `not_configured`) is stored and shown in the dashboard.

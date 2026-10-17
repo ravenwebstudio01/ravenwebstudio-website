@@ -51,7 +51,7 @@ This document lists the controls implemented in the code and the operational ste
 
 ## Spam and abuse protection (inquiry form)
 
-Honeypot field, signed time token (minimum 3 s, maximum 24 h), rate limits (5 per 10 min and 20 per day per pseudonymised IP; 3 per hour per e-mail), link-count heuristic. Suspected spam is kept with status *spam* so false positives can be recovered. No third-party CAPTCHA is used; if spam becomes a problem, consider adding Cloudflare Turnstile or Friendly Captcha (both require a privacy-notice update).
+Honeypot field, signed time token (minimum 3 s, maximum 24 h), rate limits (5 per 10 min and 20 per day per pseudonymised IP; 3 per hour per e-mail), link-count heuristic. Obvious bots receive a normal-looking response but nothing is stored; link-stuffed messages are kept with status *spam* (no e-mails sent) so false positives can be recovered. No third-party CAPTCHA is used; if spam becomes a problem, consider adding Cloudflare Turnstile or Friendly Captcha (both require a privacy-notice update).
 
 ## Logging and audit
 
