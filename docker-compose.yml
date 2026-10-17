@@ -1,0 +1,46 @@
+# Local development database (and an optional self-hosted stack).
+#
+#   docker compose up -d db mailpit     # PostgreSQL + local mail catcher for development
+#   docker compose --profile app up -d  # also run the production image
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ravenwebstudio
+    ports:
+      - '127.0.0.1:5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - '127.0.0.1:1025:1025' # SMTP
+      - '127.0.0.1:8025:8025' # web UI to read captured e-mails
+
+  app:
+    profiles: ['app']
+    build: .
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/ravenwebstudio
+      STORAGE_DRIVER: local
+      TRUST_PROXY: 'true'
+    ports:
+      - '127.0.0.1:3000:3000'
+    volumes:
+      - media:/app/storage
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  media:

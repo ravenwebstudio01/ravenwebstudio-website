@@ -1,0 +1,230 @@
+name: CI
+
+on:
+  push:
+    branches-ignore: [ci-reports]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write # publishes test reports to the `ci-reports` branch
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Lint, types, tests, build, e2e, audits
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ravenwebstudio
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+      mailpit:
+        image: axllent/mailpit:latest
+        ports: ['1025:1025', '8025:8025']
+    env:
+      CI: 'true'
+      NODE_ENV: test
+      NEXT_TELEMETRY_DISABLED: '1'
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/ravenwebstudio
+      TEST_DATABASE_URL: postgres://postgres:postgres@localhost:5432/ravenwebstudio_test
+      SESSION_SECRET: ci-only-secret-0123456789abcdef0123456789abcdef
+      SITE_URL: http://localhost:3000
+      SHOW_SAMPLE_CONTENT: 'true'
+      SMTP_HOST: localhost
+      SMTP_PORT: '1025'
+      MAIL_FROM: 'RavenWebStudio <no-reply@ravenwebstudio.test>'
+      MAILPIT_API: http://localhost:8025
+      ADMIN_EMAIL: admin@ravenwebstudio.test
+      ADMIN_PASSWORD: ci-Admin-Passphrase-2026
+      CRON_SECRET: ci-cron-secret-0123456789
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: ${{ hashFiles('package-lock.json') != '' && 'npm' || '' }}
+
+      - name: Install dependencies
+        id: install
+        run: |
+          mkdir -p reports
+          set -o pipefail
+          if [ -f package-lock.json ]; then npm ci 2>&1 | tail -n 60 | tee reports/install.log
+          else npm install 2>&1 | tail -n 60 | tee reports/install.log; cp package-lock.json reports/package-lock.json; fi
+          npm ls --depth=0 > reports/dependencies.txt 2>&1 || true
+
+      - name: Migrations in sync with schema
+        id: migrations
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          mkdir -p reports/generated
+          if ! ls drizzle/*.sql >/dev/null 2>&1; then
+            npx drizzle-kit generate --name init 2>&1 | tee reports/migrations.log
+            cp -r drizzle reports/generated/
+            echo "Generated initial migration; copy reports/generated/drizzle into the repo." | tee -a reports/migrations.log
+          else
+            npx drizzle-kit generate --name pending 2>&1 | tee reports/migrations.log
+            if [ -n "$(git status --porcelain drizzle)" ]; then
+              cp -r drizzle reports/generated/
+              echo "Schema changed without a committed migration." | tee -a reports/migrations.log
+              exit 1
+            fi
+          fi
+
+      - name: Lint
+        id: lint
+        continue-on-error: true
+        run: set -o pipefail; npm run lint 2>&1 | tee reports/lint.log
+
+      - name: Type check
+        id: typecheck
+        continue-on-error: true
+        run: set -o pipefail; (npx next typegen && npm run typecheck) 2>&1 | tee reports/typecheck.log
+
+      - name: Prepare databases
+        run: |
+          PGPASSWORD=postgres psql -h localhost -U postgres -c "CREATE DATABASE ravenwebstudio_test" || true
+          set -o pipefail
+          npm run db:migrate 2>&1 | tee reports/db-migrate.log
+
+      - name: Unit and integration tests
+        id: tests
+        continue-on-error: true
+        run: set -o pipefail; npx vitest run --reporter=verbose 2>&1 | tee reports/tests.log
+
+      - name: Production build
+        id: build
+        continue-on-error: true
+        env:
+          NODE_ENV: production
+        run: set -o pipefail; npm run build 2>&1 | tee reports/build.log
+
+      - name: Seed data and admin user
+        id: seed
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          (npm run db:seed && npm run admin:create -- --name "CI Admin" --if-missing) 2>&1 | tee reports/seed.log
+
+      - name: Start production server
+        id: server
+        continue-on-error: true
+        env:
+          NODE_ENV: production
+          COOKIE_SECURE: 'false'
+        run: |
+          nohup npm run start > reports/server.log 2>&1 &
+          for i in $(seq 1 60); do
+            if curl -fsS http://localhost:3000/api/health > /dev/null; then echo "server up"; exit 0; fi
+            sleep 2
+          done
+          echo "server did not start"; exit 1
+
+      - name: Install Playwright browser
+        if: steps.server.outcome == 'success'
+        run: npx playwright install --with-deps chromium > reports/playwright-install.log 2>&1
+
+      - name: End-to-end, accessibility and visual checks
+        id: e2e
+        if: steps.server.outcome == 'success'
+        continue-on-error: true
+        env:
+          E2E_BASE_URL: http://localhost:3000
+        run: set -o pipefail; npx playwright test 2>&1 | tee reports/e2e.log
+
+      - name: Lighthouse
+        id: lighthouse
+        if: steps.server.outcome == 'success'
+        continue-on-error: true
+        run: |
+          mkdir -p reports/lighthouse
+          export CHROME_PATH=$(node -e "console.log(require('@playwright/test').chromium.executablePath())")
+          for page in "/" "/services" "/work" "/pricing" "/contact"; do
+            name=$(echo "$page" | sed 's#^/$#home#; s#^/##; s#/#-#g')
+            for preset in mobile desktop; do
+              extra=""; [ "$preset" = "desktop" ] && extra="--preset=desktop"
+              npx --yes lighthouse@12 "http://localhost:3000$page" $extra --quiet \
+                --chrome-flags="--headless=new --no-sandbox" \
+                --output=json --output-path="reports/lighthouse/$name-$preset.json" || echo "lighthouse failed for $page $preset"
+            done
+          done
+          node scripts/ci/summarize-lighthouse.mjs reports/lighthouse > reports/lighthouse-summary.md
+          rm -f reports/lighthouse/*.json
+
+      - name: Security checks
+        id: security
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          node scripts/ci/secret-scan.mjs 2>&1 | tee reports/secret-scan.log
+          npm audit --omit=dev --audit-level=high 2>&1 | tail -n 40 | tee reports/npm-audit.log
+
+      - name: Write summary
+        if: always()
+        run: |
+          cat > reports/summary.json <<EOF
+          {
+            "sha": "${{ github.sha }}",
+            "ref": "${{ github.ref_name }}",
+            "run_id": "${{ github.run_id }}",
+            "install": "${{ steps.install.outcome }}",
+            "migrations": "${{ steps.migrations.outcome }}",
+            "lint": "${{ steps.lint.outcome }}",
+            "typecheck": "${{ steps.typecheck.outcome }}",
+            "tests": "${{ steps.tests.outcome }}",
+            "build": "${{ steps.build.outcome }}",
+            "seed": "${{ steps.seed.outcome }}",
+            "server": "${{ steps.server.outcome }}",
+            "e2e": "${{ steps.e2e.outcome }}",
+            "lighthouse": "${{ steps.lighthouse.outcome }}",
+            "security": "${{ steps.security.outcome }}"
+          }
+          EOF
+          cat reports/summary.json
+          tail -n 80 reports/server.log > reports/server-tail.log 2>/dev/null || true
+          rm -f reports/server.log
+
+      - name: Publish reports to ci-reports branch
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd reports
+          git init -q -b ci-reports
+          git add -A
+          git -c user.name="ci-bot" -c user.email="ci-bot@users.noreply.github.com" commit -qm "CI reports for ${GITHUB_SHA}"
+          git push -qf "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" ci-reports
+
+      - name: Fail if any check failed
+        if: always()
+        run: |
+          failed=0
+          for s in "${{ steps.migrations.outcome }}" "${{ steps.lint.outcome }}" "${{ steps.typecheck.outcome }}" \
+                   "${{ steps.tests.outcome }}" "${{ steps.build.outcome }}" "${{ steps.e2e.outcome }}" "${{ steps.security.outcome }}"; do
+            if [ "$s" = "failure" ] || [ "$s" = "skipped" ]; then failed=1; fi
+          done
+          exit $failed
+
+  docker:
+    name: Docker image builds
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    needs: verify
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t ravenwebstudio:ci .
