@@ -33,7 +33,7 @@ export default async function OffersPage() {
         </div>
       ) : (
         <div className="mt-12">
-          <OfferList offers={offers} locale={settings.locale} />
+          <OfferList offers={offers} locale={settings.locale} headingLevel="h2" />
         </div>
       )}
 

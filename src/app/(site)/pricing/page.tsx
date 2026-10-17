@@ -34,7 +34,7 @@ export default async function PricingPage() {
       ) : (
         <>
           <div className="mt-12">
-            <BudgetScale tiers={tiers} locale={locale} tone="light" />
+            <BudgetScale tiers={tiers} locale={locale} tone="light" headingLevel="h2" />
           </div>
           {copy.note && <p className="mt-5 max-w-3xl text-[0.9375rem] text-slate">{copy.note}</p>}
 

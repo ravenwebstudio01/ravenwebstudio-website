@@ -16,7 +16,7 @@ export function SiteHeader({ businessName, logo }: { businessName: string; logo:
             <Wordmark name={businessName} />
           )}
         </Link>
-        <nav aria-label="Main" className="hidden md:block">
+        <nav aria-label="Main" className="hidden lg:block">
           <ul className="flex items-center gap-1">
             {NAV_ITEMS.map((item) => (
               <li key={item.href}>

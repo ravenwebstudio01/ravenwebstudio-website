@@ -37,7 +37,7 @@ export function MobileNav({ ctaLabel }: { ctaLabel: string }) {
   }, [open])
 
   return (
-    <div className="md:hidden">
+    <div className="lg:hidden">
       <button
         ref={buttonRef}
         type="button"

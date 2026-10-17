@@ -55,7 +55,7 @@ export default async function WorkPage({ searchParams }: Props) {
       )}
 
       <div className="mt-12">
-        {visible.length > 0 ? <ProjectGrid projects={visible} /> : <WorkEmptyState title={homeWork.emptyTitle} body={homeWork.emptyBody} />}
+        {visible.length > 0 ? <ProjectGrid projects={visible} headingLevel="h2" /> : <WorkEmptyState title={homeWork.emptyTitle} body={homeWork.emptyBody} headingLevel="h2" />}
       </div>
     </div>
   )

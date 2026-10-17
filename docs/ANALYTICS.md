@@ -4,10 +4,10 @@ Analytics is **off** until a GA4 measurement ID is entered in *Dashboard → Sit
 
 ## Consent model ("basic" consent mode)
 
-1. First visit: a banner offers **Accept** and **Reject** with equal prominence. No Google script is requested and no analytics cookie is set before a choice.
+1. First visit: a banner offers **Allow analytics** and **Reject**, side by side and equally easy to choose. No Google script is requested and no analytics cookie is set before a choice.
 2. **Reject**: the choice is stored in the `rws_consent` cookie (6 months). Google is never contacted.
-3. **Accept**: the GA4 library loads with `analytics_storage: granted` and `ad_storage`, `ad_user_data`, `ad_personalization` **denied**; Google signals and ad personalisation are disabled.
-4. **Change of mind**: *Cookie settings* in the footer reopens the banner. Withdrawing consent deletes the `_ga*` cookies and stops further measurement on the next page load.
+3. **Allow analytics**: the GA4 library loads with `analytics_storage: granted` and `ad_storage`, `ad_user_data`, `ad_personalization` **denied**; Google signals and ad personalisation are disabled.
+4. **Change of mind**: *Cookie settings* in the footer (shown whenever analytics is configured) reopens the banner. Withdrawing consent deletes the `_ga*` cookies and stops further measurement on the next page load.
 5. The banner is keyboard-accessible, labelled, and does not block the page.
 
 Because the script is not loaded without consent, GA4 receives no cookieless pings (this is "basic", not "advanced", consent mode). Visits from people who reject are therefore not counted at all.

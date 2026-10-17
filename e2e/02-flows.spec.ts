@@ -2,7 +2,9 @@ import { expect, test, type Page } from '@playwright/test'
 import sharp from 'sharp'
 import { ADMIN_EMAIL, expectNoSeriousA11yIssues, login, logout, waitForMail, watchConsole } from './helpers'
 
-test.describe.configure({ mode: 'serial' })
+// These flows change shared database state, so a retry would start from a
+// different state than the first attempt; failures must be fixed, not retried.
+test.describe.configure({ mode: 'serial', retries: 0 })
 
 const NOTIFY = 'studio-inbox@ravenwebstudio.test'
 const CONTACT = 'hello@ravenwebstudio.test'
@@ -52,6 +54,7 @@ test.describe('administration and inquiry flows', () => {
     await page.goto('/admin/services')
     await page.getByRole('link', { name: 'Business websites' }).click()
     await page.getByLabel('Starting price').fill('2400')
+    await page.getByLabel('Show price on the website').uncheck()
     await page.getByRole('button', { name: 'Save changes' }).click()
     await expect(page.getByRole('status').filter({ hasText: 'Service saved.' })).toBeVisible()
     await page.goto('/services/business-websites')
@@ -131,7 +134,7 @@ test.describe('administration and inquiry flows', () => {
     await page.goto('/admin/offers/new')
     await page.getByRole('textbox', { name: /^Name/ }).fill('E2E SEO bundle')
     await page.getByLabel('Summary').fill('Ten percent off technical SEO when ordered with a business website.')
-    await page.getByLabel('Value').fill('10')
+    await page.getByRole('textbox', { name: /^Value/ }).fill('10')
     await page.getByRole('group', { name: 'Required services (all must be ordered)' }).getByRole('checkbox', { name: 'Business websites' }).check()
     await page.getByRole('group', { name: 'Discounted services' }).getByRole('checkbox', { name: 'Technical SEO' }).check()
     await page.getByLabel('Status').selectOption('published')

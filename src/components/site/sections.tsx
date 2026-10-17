@@ -41,7 +41,11 @@ export function ServiceIndex({ services, locale }: { services: PublicService[]; 
 
 /* ---------------------------------------------------------------- projects */
 
-export function ProjectGrid({ projects }: { projects: PublicProjectCard[] }) {
+/** Heading level for card titles: h2 when the list sits directly under the page h1, h3 inside a section. */
+type HeadingLevel = 'h2' | 'h3'
+
+export function ProjectGrid({ projects, headingLevel = 'h3' }: { projects: PublicProjectCard[]; headingLevel?: HeadingLevel }) {
+  const Heading = headingLevel
   return (
     <ul className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
       {projects.map((project, i) => (
@@ -64,7 +68,7 @@ export function ProjectGrid({ projects }: { projects: PublicProjectCard[] }) {
               {project.clientName && <span>{project.clientName}</span>}
               <SampleBadge show={project.isSample} />
             </div>
-            <h3 className="mt-1.5 text-h3 font-bold group-hover:text-sheen">{project.title}</h3>
+            <Heading className="mt-1.5 text-h3 font-bold group-hover:text-sheen">{project.title}</Heading>
             {project.summary && <p className="mt-2 text-slate">{project.summary}</p>}
           </Link>
         </li>
@@ -82,11 +86,22 @@ function ProjectPlaceholder({ title }: { title: string }) {
 }
 
 /** Intentional empty state: three blank browser frames waiting for real work. */
-export function WorkEmptyState({ title, body, ctaLabel = 'Talk to us about your project' }: { title: string; body: string; ctaLabel?: string }) {
+export function WorkEmptyState({
+  title,
+  body,
+  ctaLabel = 'Talk to us about your project',
+  headingLevel = 'h3',
+}: {
+  title: string
+  body: string
+  ctaLabel?: string
+  headingLevel?: HeadingLevel
+}) {
+  const Heading = headingLevel
   return (
     <div className="grid items-center gap-10 rounded-[var(--radius-panel)] border border-dashed border-line p-8 md:grid-cols-[1fr_1.1fr] md:p-12">
       <div>
-        <h3 className="text-h3 font-bold">{title}</h3>
+        <Heading className="text-h3 font-bold">{title}</Heading>
         <p className="mt-3 max-w-md text-slate">{body}</p>
         <Link href="/contact" className="btn btn-secondary mt-6" data-track="cta_click" data-track-cta-id="work_empty_contact" data-track-location="work_empty">
           {ctaLabel}
@@ -135,8 +150,19 @@ export function tierRangeLabel(tier: PublicBudgetTier, locale: string): string |
  * Budget categories laid out along a single scale — smaller projects on the
  * left, larger on the right — so visitors can place themselves on it.
  */
-export function BudgetScale({ tiers, locale, tone = 'dark' }: { tiers: PublicBudgetTier[]; locale: string; tone?: 'dark' | 'light' }) {
+export function BudgetScale({
+  tiers,
+  locale,
+  tone = 'dark',
+  headingLevel = 'h3',
+}: {
+  tiers: PublicBudgetTier[]
+  locale: string
+  tone?: 'dark' | 'light'
+  headingLevel?: HeadingLevel
+}) {
   const dark = tone === 'dark'
+  const Heading = headingLevel
   return (
     <ol className={cx('grid gap-px overflow-hidden rounded-[var(--radius-panel)]', dark ? 'bg-plumage-line' : 'bg-line', tiers.length >= 3 ? 'lg:grid-cols-3' : 'md:grid-cols-2')}>
       {tiers.map((tier, i) => {
@@ -158,7 +184,7 @@ export function BudgetScale({ tiers, locale, tone = 'dark' }: { tiers: PublicBud
               </span>
               <SampleBadge show={tier.isSample} />
             </div>
-            <h3 className="mt-5 text-h3 font-bold">{tier.name}</h3>
+            <Heading className="mt-5 text-h3 font-bold">{tier.name}</Heading>
             <p className={cx('tabular mt-1 text-lg font-semibold', dark ? 'text-sheen-on-dark' : 'text-sheen')}>
               {range ?? 'Budget discussed individually'}
             </p>
@@ -196,7 +222,18 @@ export function BudgetScale({ tiers, locale, tone = 'dark' }: { tiers: PublicBud
 
 /* ------------------------------------------------------------------ offers */
 
-export function OfferList({ offers, locale, compact = false }: { offers: PublicOffer[]; locale: string; compact?: boolean }) {
+export function OfferList({
+  offers,
+  locale,
+  compact = false,
+  headingLevel = 'h3',
+}: {
+  offers: PublicOffer[]
+  locale: string
+  compact?: boolean
+  headingLevel?: HeadingLevel
+}) {
+  const Heading = headingLevel
   return (
     <ul className="grid gap-6 md:grid-cols-2">
       {offers.map((offer) => {
@@ -208,7 +245,7 @@ export function OfferList({ offers, locale, compact = false }: { offers: PublicO
               <span className="text-[0.9375rem] font-semibold text-slate">{appliesTo}</span>
               <SampleBadge show={offer.isSample} />
             </div>
-            <h3 className="mt-4 text-h3 font-bold">{offer.name}</h3>
+            <Heading className="mt-4 text-h3 font-bold">{offer.name}</Heading>
             {offer.summary && <p className="mt-2 text-slate">{offer.summary}</p>}
             {!compact && (
               <ul className="mt-5 space-y-1.5 border-t border-line pt-5 text-[0.9375rem]">
