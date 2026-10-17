@@ -1,0 +1,150 @@
+
+#9 [deps 4/4] RUN npm ci
+#9 3.507 npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.hirok.io
+#9 3.519 npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.hirok.io
+#9 9.196 npm warn deprecated eslint@9.39.5: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+#9 14.14 
+#9 14.14 added 537 packages, and audited 538 packages in 14s
+#9 14.14 
+#9 14.14 246 packages are looking for funding
+#9 14.14   run `npm fund` for details
+#9 14.18 
+#9 14.18 9 vulnerabilities (4 moderate, 5 high)
+#9 14.18 
+#9 14.18 To address all issues (including breaking changes), run:
+#9 14.18   npm audit fix --force
+#9 14.18 
+#9 14.18 Run `npm audit` for details.
+#9 14.18 npm notice
+#9 14.18 npm notice New major version of npm available! 10.9.9 -> 12.2.0
+#9 14.18 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+#9 14.18 npm notice To update run: npm install -g npm@12.2.0
+#9 14.18 npm notice
+#9 DONE 17.1s
+
+#11 [build 3/5] COPY --from=deps /app/node_modules ./node_modules
+#11 DONE 6.9s
+
+#12 [build 4/5] COPY . .
+#12 DONE 0.0s
+
+#13 [build 5/5] RUN mkdir -p public && npm run build
+#13 0.385 
+#13 0.385 > ravenwebstudio-website@0.1.0 build
+#13 0.385 > next build
+#13 0.385 
+#13 0.722 ▲ Next.js 16.4.2 (Turbopack)
+#13 0.744 ✓ Running next.config.ts took 22ms
+#13 0.753 
+#13 0.783   Creating an optimized production build ...
+#13 7.502 ✓ Compiled successfully in 6.7s
+#13 7.515   Running TypeScript ...
+#13 14.34   Finished TypeScript in 6.8s ...
+#13 14.34   Collecting page data using 3 workers ...
+#13 15.31   Generating static pages using 3 workers (0/39) ...
+#13 15.41   Generating static pages using 3 workers (9/39) 
+#13 15.46   Generating static pages using 3 workers (19/39) 
+#13 15.50   Generating static pages using 3 workers (29/39) 
+#13 15.69 ✓ Generating static pages using 3 workers (39/39) in 381ms
+#13 15.69   Finalizing page optimization ...
+#13 16.52 
+#13 16.52 Route (app)
+#13 16.52 ┌ ƒ /
+#13 16.52 ├ ƒ /_not-found
+#13 16.52 ├ ƒ /about
+#13 16.52 ├ ƒ /admin
+#13 16.52 ├ ƒ /admin/account
+#13 16.52 ├ ƒ /admin/audit
+#13 16.52 ├ ƒ /admin/budgets
+#13 16.52 ├ ƒ /admin/budgets/[id]
+#13 16.52 ├ ƒ /admin/budgets/new
+#13 16.52 ├ ƒ /admin/categories
+#13 16.52 ├ ƒ /admin/collaborations
+#13 16.52 ├ ƒ /admin/collaborations/[id]
+#13 16.52 ├ ƒ /admin/collaborations/new
+#13 16.52 ├ ƒ /admin/content
+#13 16.52 ├ ƒ /admin/content/[key]
+#13 16.52 ├ ƒ /admin/forgot-password
+#13 16.52 ├ ƒ /admin/inquiries
+#13 16.52 ├ ƒ /admin/inquiries/[id]
+#13 16.52 ├ ƒ /admin/login
+#13 16.52 ├ ƒ /admin/media
+#13 16.52 ├ ƒ /admin/offers
+#13 16.52 ├ ƒ /admin/offers/[id]
+#13 16.52 ├ ƒ /admin/offers/calculator
+#13 16.52 ├ ƒ /admin/offers/new
+#13 16.52 ├ ƒ /admin/projects
+#13 16.52 ├ ƒ /admin/projects/[id]
+#13 16.52 ├ ƒ /admin/projects/[id]/preview
+#13 16.52 ├ ƒ /admin/projects/new
+#13 16.52 ├ ƒ /admin/redirects
+#13 16.52 ├ ƒ /admin/reset-password
+#13 16.52 ├ ƒ /admin/services
+#13 16.52 ├ ƒ /admin/services/[id]
+#13 16.52 ├ ƒ /admin/services/new
+#13 16.52 ├ ƒ /admin/settings
+#13 16.52 ├ ƒ /admin/users
+#13 16.52 ├ ƒ /api/admin/inquiries/[id]/export
+#13 16.52 ├ ƒ /api/admin/media
+#13 16.52 ├ ƒ /api/cron/maintenance
+#13 16.52 ├ ƒ /api/health
+#13 16.52 ├ ƒ /contact
+#13 16.52 ├ ƒ /cookies
+#13 16.52 ├ ○ /icon.svg
+#13 16.52 ├ ƒ /legal-notice
+#13 16.52 ├ ○ /manifest.webmanifest
+#13 16.52 ├ ƒ /media/[...path]
+#13 16.52 ├ ƒ /offers
+#13 16.52 ├ ○ /opengraph-image
+#13 16.52 ├ ƒ /pricing
+#13 16.52 ├ ƒ /privacy
+#13 16.52 ├ ƒ /robots.txt
+#13 16.52 ├ ƒ /services
+#13 16.52 ├ ƒ /services/[slug]
+#13 16.52 ├ ƒ /sitemap.xml
+#13 16.52 ├ ƒ /work
+#13 16.52 └ ƒ /work/[slug]
+#13 16.52 
+#13 16.52 
+#13 16.52 ƒ Proxy (Middleware)
+#13 16.52 
+#13 16.52 ○  (Static)   prerendered as static content
+#13 16.52 ƒ  (Dynamic)  server-rendered on demand
+#13 16.52 
+#13 16.57 npm notice
+#13 16.57 npm notice New major version of npm available! 10.9.9 -> 12.2.0
+#13 16.57 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+#13 16.57 npm notice To update run: npm install -g npm@12.2.0
+#13 16.57 npm notice
+#13 DONE 17.0s
+
+#14 [runner  4/11] COPY --from=build --chown=app:app /app/.next/standalone ./
+#14 DONE 0.7s
+
+#15 [runner  5/11] COPY --from=build --chown=app:app /app/.next/static ./.next/static
+#15 DONE 0.1s
+
+#16 [runner  6/11] COPY --from=build --chown=app:app /app/public ./public
+#16 DONE 0.0s
+
+#17 [runner  7/11] COPY --from=build --chown=app:app /app/drizzle ./drizzle
+#17 DONE 0.0s
+
+#18 [runner  8/11] COPY --from=build --chown=app:app /app/scripts ./scripts
+#18 DONE 0.1s
+
+#19 [runner  9/11] COPY --from=build --chown=app:app /app/src ./src
+#19 DONE 0.1s
+
+#20 [runner 10/11] COPY --from=build --chown=app:app /app/tsconfig.json /app/package.json ./
+#20 DONE 0.0s
+
+#21 [runner 11/11] COPY --from=deps --chown=app:app /app/node_modules ./node_modules
+#21 DONE 7.6s
+
+#22 exporting to image
+#22 exporting layers
+#22 exporting layers 4.5s done
+#22 writing image sha256:6a5cff17ff7810a49f08cc9fbe1d12d3a4c79be67eb591b34e2a4dff561d54fc done
+#22 naming to docker.io/library/ravenwebstudio:ci done
+#22 DONE 4.5s
