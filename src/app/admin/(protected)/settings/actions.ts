@@ -8,7 +8,7 @@ import { sendMail, verifySmtp } from '@/lib/email/mailer'
 import { testEmail } from '@/lib/email/templates'
 import { loadSettings, saveSettings } from '@/lib/settings'
 import { SUPPORTED_CURRENCIES } from '@/lib/money'
-import { z } from 'zod'
+import { z } from '@/lib/zod'
 
 // Strict version of the settings schema for editing: invalid input is reported,
 // not silently replaced with defaults.

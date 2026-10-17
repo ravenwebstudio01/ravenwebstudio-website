@@ -14,7 +14,16 @@ const eslintConfig = defineConfig([
         'error',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
+      // zod must be configured for the strict CSP (no eval) before use.
+      'no-restricted-imports': [
+        'error',
+        { paths: [{ name: 'zod', message: "Import { z } from '@/lib/zod' so the CSP-safe configuration applies." }] },
+      ],
     },
+  },
+  {
+    files: ['src/lib/zod.ts', 'tests/**', 'e2e/**', 'scripts/**'],
+    rules: { 'no-restricted-imports': 'off' },
   },
   globalIgnores([
     '.next/**',

@@ -45,7 +45,8 @@ for (const file of readdirSync(dir).filter((f) => f.endsWith('.json')).sort()) {
       `| ${name} | ${score('performance')} | ${score('accessibility')} | ${score('best-practices')} | ${score('seo')} | ${metric('largest-contentful-paint')} | ${metric('cumulative-layout-shift')} | ${metric('total-blocking-time')} | ${binary.slice(0, 8).join(', ')} |`,
     )
     const lines = []
-    for (const audit of failingAudits) {
+    // Details only for pass/fail audits; opportunity "insights" are advisory.
+    for (const audit of failingAudits.filter((a) => a.scoreDisplayMode === 'binary')) {
       const items = Array.isArray(audit.details?.items) ? audit.details.items.slice(0, 4).map(itemText) : []
       lines.push(`- **${audit.id}** (${audit.title})${audit.displayValue ? ` — ${audit.displayValue}` : ''}`)
       for (const text of items) lines.push(`  - ${text}`)
@@ -60,6 +61,6 @@ console.log('| Page | Perf | A11y | Best practices | SEO | LCP | CLS | TBT | Fai
 console.log('| --- | --- | --- | --- | --- | --- | --- | --- | --- |')
 for (const row of rows) console.log(row)
 if (details.length) {
-  console.log('\n## Details of audits below 90\n')
+  console.log('\n## Details of failing pass/fail audits\n')
   console.log(details.join('\n\n'))
 }

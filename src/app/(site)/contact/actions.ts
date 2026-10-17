@@ -1,7 +1,7 @@
 'use server'
 
 import { after } from 'next/server'
-import { z } from 'zod'
+import { z } from '@/lib/zod'
 import { inquiryInputFromFormData, SLUG_RE } from '@/lib/inquiries/schema'
 import { submitInquiry } from '@/lib/inquiries/service'
 import { computeEstimate } from '@/lib/offers/estimate'

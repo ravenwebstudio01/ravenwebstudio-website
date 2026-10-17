@@ -4,7 +4,7 @@
  * Values are parsed lazily so that `next build` does not fail when runtime-only
  * secrets are absent. Anything secret must never be prefixed with NEXT_PUBLIC_.
  */
-import { z } from 'zod'
+import { z } from '@/lib/zod'
 
 const bool = z
   .enum(['true', 'false', '1', '0', ''])

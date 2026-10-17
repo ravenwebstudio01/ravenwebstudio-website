@@ -1,5 +1,5 @@
 import 'server-only'
-import type { z } from 'zod'
+import type { z } from '@/lib/zod'
 import { AuthorizationError, requireActionUser } from '@/lib/auth/guards'
 import type { Permission } from '@/lib/auth/permissions'
 import type { SessionContext } from '@/lib/auth/session'

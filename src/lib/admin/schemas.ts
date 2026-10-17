@@ -1,5 +1,5 @@
 /** Server-side validation for dashboard forms. */
-import { z } from 'zod'
+import { z } from '@/lib/zod'
 import { SUPPORTED_CURRENCIES } from '@/lib/money'
 import { SLUG_PATTERN } from '@/lib/utils'
 import { SERVICE_ICONS } from '@/components/site/service-icon'

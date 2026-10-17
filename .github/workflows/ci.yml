@@ -156,9 +156,15 @@ jobs:
             name=$(echo "$page" | sed 's#^/$#home#; s#^/##; s#/#-#g')
             for preset in mobile desktop; do
               extra=""; [ "$preset" = "desktop" ] && extra="--preset=desktop"
-              npx --yes lighthouse@12 "http://localhost:3000$page" $extra --quiet \
-                --chrome-flags="--headless=new --no-sandbox" \
-                --output=json --output-path="reports/lighthouse/$name-$preset.json" || echo "lighthouse failed for $page $preset"
+              out="reports/lighthouse/$name-$preset.json"
+              # Up to two attempts: Lighthouse occasionally fails to record a trace (NO_NAVSTART).
+              for attempt in 1 2; do
+                npx --yes lighthouse@12 "http://localhost:3000$page" $extra --quiet \
+                  --chrome-flags="--headless=new --no-sandbox" \
+                  --output=json --output-path="$out" || echo "lighthouse failed for $page $preset"
+                if [ -f "$out" ] && node -e "const r=require('./$out'); process.exit(r.runtimeError && r.runtimeError.code !== 'NO_ERROR' ? 1 : 0)"; then break; fi
+                echo "retrying $page $preset"
+              done
             done
           done
           node scripts/ci/summarize-lighthouse.mjs reports/lighthouse > reports/lighthouse-summary.md
@@ -227,4 +233,25 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Build image
-        run: docker build -t ravenwebstudio:ci .
+        id: build
+        continue-on-error: true
+        run: |
+          mkdir -p docker-report
+          set -o pipefail
+          docker build --progress=plain -t ravenwebstudio:ci . 2>&1 | tail -n 150 | tee docker-report/docker-build.log
+
+      - name: Publish Docker build log to ci-docker-report branch
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd docker-report
+          echo '{"sha":"${{ github.sha }}","docker_build":"${{ steps.build.outcome }}"}' > summary.json
+          git init -q -b ci-docker-report
+          git add -A
+          git -c user.name="ci-bot" -c user.email="ci-bot@users.noreply.github.com" commit -qm "Docker build log for ${GITHUB_SHA}"
+          git push -qf "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" ci-docker-report
+
+      - name: Fail if the image did not build
+        if: steps.build.outcome != 'success'
+        run: exit 1

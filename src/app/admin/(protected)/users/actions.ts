@@ -2,7 +2,7 @@
 
 import { randomBytes } from 'node:crypto'
 import { and, eq, ne } from 'drizzle-orm'
-import { z } from 'zod'
+import { z } from '@/lib/zod'
 import type { ActionResult } from '@/lib/admin/action-result'
 import { ValidationError } from '@/lib/admin/action-result'
 import { optionalId, str } from '@/lib/admin/form-data'

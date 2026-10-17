@@ -4,7 +4,7 @@
  * invalid stored values fall back to defaults instead of breaking pages.
  */
 import { eq } from 'drizzle-orm'
-import { z } from 'zod'
+import { z } from '@/lib/zod'
 import { getDb } from '@/lib/db'
 import { siteSettings } from '@/lib/db/schema'
 import { SUPPORTED_CURRENCIES } from '@/lib/money'

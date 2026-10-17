@@ -7,7 +7,7 @@
  * Default copy is a starting draft: it describes how the studio works without
  * claiming clients, results, history or certifications. Review it before launch.
  */
-import { z } from 'zod'
+import { z } from '@/lib/zod'
 
 export type TextField = { type: 'text'; label: string; max: number; help?: string; optional?: boolean }
 export type TextareaField = { type: 'textarea'; label: string; max: number; rows?: number; help?: string; optional?: boolean }

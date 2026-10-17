@@ -2,7 +2,7 @@
  * Inquiry form schema — shared by the browser (instant feedback) and the server
  * (authoritative validation). Keep it free of server-only imports.
  */
-import { z } from 'zod'
+import { z } from '@/lib/zod'
 
 export const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 

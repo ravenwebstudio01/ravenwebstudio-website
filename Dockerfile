@@ -11,7 +11,8 @@ WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1 NEXT_OUTPUT=standalone
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm run build
+# `public/` may be empty (and therefore absent from a Git checkout).
+RUN mkdir -p public && npm run build
 
 FROM node:22-bookworm-slim AS runner
 WORKDIR /app
