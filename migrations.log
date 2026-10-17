@@ -1,0 +1,29 @@
+No config path provided, using default 'drizzle.config.ts'
+Reading config file '/home/runner/work/ravenwebstudio-website/ravenwebstudio-website/drizzle.config.ts'
+24 tables
+audit_logs 9 columns 2 indexes 1 fks
+budget_tier_services 2 columns 0 indexes 2 fks
+budget_tiers 18 columns 0 indexes 0 fks
+collaboration_types 10 columns 0 indexes 0 fks
+content_blocks 4 columns 0 indexes 1 fks
+inquiries 26 columns 3 indexes 3 fks
+inquiry_notes 6 columns 1 indexes 2 fks
+inquiry_services 5 columns 1 indexes 2 fks
+media 11 columns 0 indexes 1 fks
+offer_services 3 columns 0 indexes 2 fks
+offers 25 columns 1 indexes 0 fks
+password_reset_tokens 6 columns 1 indexes 1 fks
+project_categories 7 columns 0 indexes 0 fks
+project_media 4 columns 0 indexes 2 fks
+project_services 2 columns 0 indexes 2 fks
+projects 25 columns 2 indexes 2 fks
+rate_limits 3 columns 1 indexes 0 fks
+redirects 6 columns 0 indexes 0 fks
+service_categories 7 columns 0 indexes 0 fks
+service_relations 2 columns 0 indexes 2 fks
+services 24 columns 1 indexes 2 fks
+sessions 7 columns 2 indexes 1 fks
+site_settings 4 columns 0 indexes 1 fks
+users 12 columns 0 indexes 0 fks
+
+No schema changes, nothing to migrate 😴

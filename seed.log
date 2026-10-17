@@ -1,0 +1,10 @@
+
+> ravenwebstudio-website@0.1.0 db:seed
+> tsx scripts/seed.ts
+
+Seed complete. 10 sample services present (hidden in production unless SHOW_SAMPLE_CONTENT=true).
+
+> ravenwebstudio-website@0.1.0 admin:create
+> tsx scripts/create-admin.ts --name CI Admin --if-missing
+
+Created admin account for admin@ravenwebstudio.test.

@@ -1,0 +1,36 @@
+ravenwebstudio-website@0.1.0 /home/runner/work/ravenwebstudio-website/ravenwebstudio-website
+├── @axe-core/playwright@4.14.0
+├── @emnapi/core@1.10.0 extraneous
+├── @emnapi/runtime@1.11.3 extraneous
+├── @emnapi/wasi-threads@1.2.1 extraneous
+├── @img/sharp-wasm32@0.35.5 extraneous
+├── @napi-rs/wasm-runtime@1.2.5 extraneous
+├── @playwright/test@1.64.1
+├── @tailwindcss/postcss@4.3.3
+├── @tybys/wasm-util@0.10.4 extraneous
+├── @types/node@22.20.5
+├── @types/nodemailer@7.0.12
+├── @types/pg@8.23.1
+├── @types/react-dom@19.3.0
+├── @types/react@19.3.0
+├── aws4fetch@1.0.20
+├── drizzle-kit@0.31.11
+├── drizzle-orm@0.45.4
+├── eslint-config-next@16.4.2
+├── eslint@9.39.5
+├── next@16.4.2
+├── nodemailer@10.1.2
+├── pg@8.23.1
+├── react-dom@19.3.1
+├── react-markdown@10.1.0
+├── react@19.3.1
+├── remark-breaks@4.0.0
+├── remark-gfm@4.0.1
+├── server-only@0.0.1
+├── sharp@0.35.5
+├── tailwindcss@4.3.3
+├── tsx@4.23.15
+├── typescript@5.9.3
+├── vitest@5.0.5
+└── zod@4.6.7
+

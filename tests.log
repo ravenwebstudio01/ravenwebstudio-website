@@ -1,0 +1,80 @@
+[33m(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.[39m
+[33m(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.[39m
+[33m(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.[39m
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.5 [39m[90m/home/runner/work/ravenwebstudio-website/ravenwebstudio-website[39m
+
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/offers-engine.test.ts[2m > [22mevaluateOffers[2m > [22mreturns subtotal with no offers[32m 2[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/offers-engine.test.ts[2m > [22mevaluateOffers[2m > [22mapplies a percentage discount only to eligible services[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/offers-engine.test.ts[2m > [22mevaluateOffers[2m > [22mapplies order-total scope across all lines[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/offers-engine.test.ts[2m > [22mevaluateOffers[2m > [22mcaps fixed discounts at the eligible base and at maxDiscount[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/offers-engine.test.ts[2m > [22mevaluateOffers[2m > [22mnever stacks a non-stackable offer with others and picks the best option[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/offers-engine.test.ts[2m > [22mevaluateOffers[2m > [22mstacks stackable offers sequentially when that is better[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/offers-engine.test.ts[2m > [22mevaluateOffers[2m > [22mapplies each offer at most once even if listed twice[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/offers-engine.test.ts[2m > [22mevaluateOffers[2m > [22mrespects date windows, status and client eligibility[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/offers-engine.test.ts[2m > [22mevaluateOffers[2m > [22mtreats the end date as exclusive[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/offers-engine.test.ts[2m > [22mevaluateOffers[2m > [22mrequires codes case-insensitively[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/offers-engine.test.ts[2m > [22mevaluateOffers[2m > [22mdoes not auto-apply offers that need manual approval[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/offers-engine.test.ts[2m > [22mevaluateOffers[2m > [22mchecks minimum subtotal, service count and required services[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/offers-engine.test.ts[2m > [22mevaluateOffers[2m > [22mrejects fixed offers in another currency and mixed-currency carts[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/offers-engine.test.ts[2m > [22mevaluateOffers[2m > [22mkeeps per-line discounts exact and never negative[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/offers-engine.test.ts[2m > [22mevaluateOffers[2m > [22mrejects empty carts and invalid amounts[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/money-utils.test.ts[2m > [22mmoney[2m > [22mparses administrator amounts into cents[32m 2[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/money-utils.test.ts[2m > [22mmoney[2m > [22mround-trips minor units to editable strings[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/money-utils.test.ts[2m > [22mmoney[2m > [22mformats euro amounts and ranges[32m 12[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/money-utils.test.ts[2m > [22mmoney[2m > [22mconverts percentages and basis points[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/money-utils.test.ts[2m > [22mutils[2m > [22mcreates readable slugs including European characters[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/money-utils.test.ts[2m > [22mutils[2m > [22maccepts only http(s) external URLs[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/money-utils.test.ts[2m > [22mutils[2m > [22mfills placeholders and marks missing values visibly[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/money-utils.test.ts[2m > [22mpermissions[2m > [22mlimits editors to content management[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/money-utils.test.ts[2m > [22moffer descriptions[2m > [22mexplains the discount in plain language[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/money-utils.test.ts[2m > [22me-mail templates[2m > [22mescapes HTML and strips header injection[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/money-utils.test.ts[2m > [22me-mail templates[2m > [22mnever puts raw user HTML into notification e-mails[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/money-utils.test.ts[2m > [22me-mail templates[2m > [22momits personal details when configured[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/money-utils.test.ts[2m > [22manalytics parameters[2m > [22mdrops values that look like personal data[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/validation.test.ts[2m > [22minquiry schema[2m > [22maccepts a minimal valid inquiry and normalises values[32m 3[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/validation.test.ts[2m > [22minquiry schema[2m > [22mrequires the essentials with clear messages[32m 2[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/validation.test.ts[2m > [22minquiry schema[2m > [22mrejects unsafe or malformed references[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/validation.test.ts[2m > [22minquiry schema[2m > [22mreads multi-value form data[32m 16[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/validation.test.ts[2m > [22mform token[2m > [22mdetects bots that submit instantly, expired and forged tokens[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/validation.test.ts[2m > [22mcontent registry[2m > [22mhas unique keys and defaults that pass their own validation[32m 3[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/validation.test.ts[2m > [22mcontent registry[2m > [22mmerges stored values over defaults and ignores invalid or unknown fields[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/validation.test.ts[2m > [22msettings[2m > [22mfalls back to safe defaults for missing or invalid values[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/validation.test.ts[2m > [22madmin schemas[2m > [22mvalidates offers[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/validation.test.ts[2m > [22madmin schemas[2m > [22monly allows internal redirect targets[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/password-media.test.ts[2m > [22mpassword hashing[2m > [22mhashes with scrypt and verifies[33m 856[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/password-media.test.ts[2m > [22mpassword hashing[2m > [22muses a unique salt per hash[33m 550[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/password-media.test.ts[2m > [22mpassword hashing[2m > [22mrejects malformed stored hashes[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/password-media.test.ts[2m > [22mpassword hashing[2m > [22menforces a sensible password policy[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/password-media.test.ts[2m > [22mimage processing[2m > [22mre-encodes uploads as WebP variants without enlarging[32m 97[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/password-media.test.ts[2m > [22mimage processing[2m > [22mrejects SVG, non-images and oversize files[32m 2[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m tests/unit/password-media.test.ts[2m > [22mimage processing[2m > [22mcleans file names[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[45m integration [49m[39m tests/integration/inquiries.test.ts[2m > [22minquiry submission[2m > [22mstores a valid inquiry with services, budget-free defaults and a server-side estimate[32m 79[2mms[22m[39m
+ [32m✓[39m [30m[45m integration [49m[39m tests/integration/inquiries.test.ts[2m > [22minquiry submission[2m > [22mapplies private offer codes and rejects invalid codes with a field error[32m 57[2mms[22m[39m
+ [32m✓[39m [30m[45m integration [49m[39m tests/integration/inquiries.test.ts[2m > [22minquiry submission[2m > [22msilently drops bot submissions (honeypot or too fast) without storing them[32m 25[2mms[22m[39m
+ [32m✓[39m [30m[45m integration [49m[39m tests/integration/inquiries.test.ts[2m > [22minquiry submission[2m > [22mrejects forged tokens and invalid input[32m 27[2mms[22m[39m
+ [32m✓[39m [30m[45m integration [49m[39m tests/integration/inquiries.test.ts[2m > [22minquiry submission[2m > [22mlimits repeated submissions from one address[32m 46[2mms[22m[39m
+ [32m✓[39m [30m[45m integration [49m[39m tests/integration/inquiries.test.ts[2m > [22minquiry submission[2m > [22mflags link-stuffed messages as spam without notifying anyone[32m 33[2mms[22m[39m
+ [32m✓[39m [30m[45m integration [49m[39m tests/integration/inquiries.test.ts[2m > [22minquiry submission[2m > [22mrecords "not configured" when e-mail is unavailable, instead of pretending to send[32m 32[2mms[22m[39m
+ [32m✓[39m [30m[45m integration [49m[39m tests/integration/inquiries.test.ts[2m > [22mestimates and visibility[2m > [22mnever sums recurring prices with one-off prices and refuses hidden prices[32m 36[2mms[22m[39m
+ [32m✓[39m [30m[45m integration [49m[39m tests/integration/inquiries.test.ts[2m > [22mestimates and visibility[2m > [22mhides drafts and sample content from public queries in production mode[32m 33[2mms[22m[39m
+ [32m✓[39m [30m[45m integration [49m[39m tests/integration/inquiries.test.ts[2m > [22mdata retention[2m > [22mdeletes inquiries older than the retention period[32m 116[2mms[22m[39m
+ [32m✓[39m [30m[45m integration [49m[39m tests/integration/auth.test.ts[2m > [22mlogin[2m > [22msigns in with correct credentials (case-insensitive e-mail) and audits it[33m 618[2mms[22m[39m
+ [32m✓[39m [30m[45m integration [49m[39m tests/integration/auth.test.ts[2m > [22mlogin[2m > [22mrejects wrong passwords, unknown and inactive accounts with the same answer[33m 1959[2mms[22m[39m
+ [32m✓[39m [30m[45m integration [49m[39m tests/integration/auth.test.ts[2m > [22mlogin[2m > [22mthrottles an account after repeated failures, even with the right password[33m 1930[2mms[22m[39m
+ [32m✓[39m [30m[45m integration [49m[39m tests/integration/auth.test.ts[2m > [22mlogin[2m > [22mrate-limits by e-mail address across IPs[33m 2980[2mms[22m[39m
+ [32m✓[39m [30m[45m integration [49m[39m tests/integration/auth.test.ts[2m > [22mpassword reset[2m > [22missues single-use tokens, enforces the policy and signs out all sessions[33m 884[2mms[22m[39m
+ [32m✓[39m [30m[45m integration [49m[39m tests/integration/auth.test.ts[2m > [22mpassword reset[2m > [22mdoes not reveal whether an account exists[32m 28[2mms[22m[39m
+ [32m✓[39m [30m[45m integration [49m[39m tests/integration/auth.test.ts[2m > [22mrate limiter[2m > [22mallows up to the limit within a window, then blocks[32m 27[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m6 passed[39m[22m[90m (6)[39m
+[2m      Tests [22m [1m[32m62 passed[39m[22m[90m (62)[39m
+[2m   Start at [22m 18:56:25
+[2m   Duration [22m 11.93s[2m (tests 87%, setup 5%, import 5%, transform 3%)[22m
+

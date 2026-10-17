@@ -1,0 +1,83 @@
+
+> ravenwebstudio-website@0.1.0 build
+> next build
+
+▲ Next.js 16.4.2 (Turbopack)
+✓ Running next.config.ts took 22ms
+⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.8s
+  Running TypeScript ...
+  Finished TypeScript in 6.5s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/39) ...
+  Generating static pages using 3 workers (9/39) 
+  Generating static pages using 3 workers (19/39) 
+  Generating static pages using 3 workers (29/39) 
+✓ Generating static pages using 3 workers (39/39) in 377ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /about
+├ ƒ /admin
+├ ƒ /admin/account
+├ ƒ /admin/audit
+├ ƒ /admin/budgets
+├ ƒ /admin/budgets/[id]
+├ ƒ /admin/budgets/new
+├ ƒ /admin/categories
+├ ƒ /admin/collaborations
+├ ƒ /admin/collaborations/[id]
+├ ƒ /admin/collaborations/new
+├ ƒ /admin/content
+├ ƒ /admin/content/[key]
+├ ƒ /admin/forgot-password
+├ ƒ /admin/inquiries
+├ ƒ /admin/inquiries/[id]
+├ ƒ /admin/login
+├ ƒ /admin/media
+├ ƒ /admin/offers
+├ ƒ /admin/offers/[id]
+├ ƒ /admin/offers/calculator
+├ ƒ /admin/offers/new
+├ ƒ /admin/projects
+├ ƒ /admin/projects/[id]
+├ ƒ /admin/projects/[id]/preview
+├ ƒ /admin/projects/new
+├ ƒ /admin/redirects
+├ ƒ /admin/reset-password
+├ ƒ /admin/services
+├ ƒ /admin/services/[id]
+├ ƒ /admin/services/new
+├ ƒ /admin/settings
+├ ƒ /admin/users
+├ ƒ /api/admin/inquiries/[id]/export
+├ ƒ /api/admin/media
+├ ƒ /api/cron/maintenance
+├ ƒ /api/health
+├ ƒ /contact
+├ ƒ /cookies
+├ ○ /icon.svg
+├ ƒ /legal-notice
+├ ○ /manifest.webmanifest
+├ ƒ /media/[...path]
+├ ƒ /offers
+├ ○ /opengraph-image
+├ ƒ /pricing
+├ ƒ /privacy
+├ ƒ /robots.txt
+├ ƒ /services
+├ ƒ /services/[slug]
+├ ƒ /sitemap.xml
+├ ƒ /work
+└ ƒ /work/[slug]
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
