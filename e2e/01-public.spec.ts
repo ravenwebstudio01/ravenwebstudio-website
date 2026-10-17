@@ -55,7 +55,9 @@ test.describe('public pages', () => {
     const toggle = page.getByRole('button', { name: 'Open menu' })
     await toggle.click()
     await expect(page.getByRole('button', { name: 'Close menu' })).toHaveAttribute('aria-expanded', 'true')
-    await expect(page.getByRole('link', { name: 'Services', exact: true }).filter({ visible: true })).toBeVisible()
+    await expect(
+      page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Services', exact: true }).filter({ visible: true }),
+    ).toBeVisible()
     await page.keyboard.press('Escape')
     await expect(page.getByRole('button', { name: 'Open menu' })).toHaveAttribute('aria-expanded', 'false')
   })
