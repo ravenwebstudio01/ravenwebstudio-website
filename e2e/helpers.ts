@@ -2,7 +2,7 @@ import { expect, type Page } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
 
 export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? 'admin@ravenwebstudio.test'
-export const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? 'ci-Admin-Passphrase-2026'
+export const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? 'ci-Raven-Passphrase-2026'
 export const MAILPIT = process.env.MAILPIT_API ?? 'http://localhost:8025'
 
 /** Collects uncaught page errors and console errors (e.g. CSP violations). */

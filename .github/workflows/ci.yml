@@ -46,12 +46,12 @@ jobs:
       MAIL_FROM: 'RavenWebStudio <no-reply@ravenwebstudio.test>'
       MAILPIT_API: http://localhost:8025
       ADMIN_EMAIL: admin@ravenwebstudio.test
-      ADMIN_PASSWORD: ci-Admin-Passphrase-2026
+      ADMIN_PASSWORD: ci-Raven-Passphrase-2026
       CRON_SECRET: ci-cron-secret-0123456789
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: ${{ hashFiles('package-lock.json') != '' && 'npm' || '' }}
@@ -225,6 +225,6 @@ jobs:
     needs: verify
     if: github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Build image
         run: docker build -t ravenwebstudio:ci .

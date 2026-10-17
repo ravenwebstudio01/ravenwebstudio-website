@@ -21,8 +21,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   const { notice } = await searchParams
   const db = getDb()
   const settings = await loadSettings()
-  const weekAgo = new Date(Date.now() - 7 * 24 * 3600_000)
   const now = new Date()
+  const weekAgo = new Date(now.getTime() - 7 * 24 * 3600_000)
 
   const [
     [openInquiries],

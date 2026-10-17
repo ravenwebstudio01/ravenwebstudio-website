@@ -43,7 +43,7 @@ export async function processImage(input: Buffer, mediaId: string): Promise<Proc
   const rotated = (meta.orientation ?? 1) >= 5
   const sourceWidth = rotated ? meta.height : meta.width
 
-  const widths = VARIANT_WIDTHS.filter((w) => w < sourceWidth)
+  const widths: number[] = VARIANT_WIDTHS.filter((w) => w < sourceWidth)
   widths.push(Math.min(sourceWidth, VARIANT_WIDTHS[VARIANT_WIDTHS.length - 1]!))
   const unique = [...new Set(widths)].sort((a, b) => a - b)
 

@@ -46,7 +46,7 @@ export default async function InquiriesPage({ searchParams }: { searchParams: Pr
   }
   const where = conditions.length ? and(...conditions) : undefined
   const db = getDb()
-  const [rows, [{ total }]] = await Promise.all([
+  const [rows, total] = await Promise.all([
     db
       .select({
         id: inquiries.id,
@@ -65,7 +65,7 @@ export default async function InquiriesPage({ searchParams }: { searchParams: Pr
       .orderBy(sort === 'oldest' ? asc(inquiries.createdAt) : desc(inquiries.createdAt))
       .limit(PAGE_SIZE)
       .offset((page - 1) * PAGE_SIZE),
-    db.select({ total: count() }).from(inquiries).where(where) as Promise<[{ total: number }]>,
+    db.select({ total: count() }).from(inquiries).where(where).then((r) => r[0]?.total ?? 0),
   ])
   const pages = Math.max(1, Math.ceil(total / PAGE_SIZE))
   const params = new URLSearchParams(Object.entries({ status, type, client, additional, q, from, to, sort }).filter(([, v]) => v) as [string, string][])
