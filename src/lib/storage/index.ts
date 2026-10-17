@@ -28,13 +28,14 @@ export function assertSafeKey(key: string): void {
 }
 
 function localRoot(): string {
-  return path.resolve(process.cwd(), env().STORAGE_LOCAL_DIR)
+  // Runtime-only path: excluded from build-time file tracing.
+  return path.resolve(/* turbopackIgnore: true */ process.cwd(), env().STORAGE_LOCAL_DIR)
 }
 
 export function localPathForKey(key: string): string {
   assertSafeKey(key)
   const root = localRoot()
-  const full = path.resolve(root, key)
+  const full = path.resolve(/* turbopackIgnore: true */ root, key)
   if (!full.startsWith(root + path.sep)) throw new Error('Path traversal blocked.')
   return full
 }

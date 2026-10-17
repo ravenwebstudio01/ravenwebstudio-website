@@ -6,7 +6,7 @@
  * few responsive widths; metadata (EXIF/GPS) is stripped. SVG is rejected
  * because it can carry scripts.
  */
-import sharp from 'sharp'
+import sharp, { type Metadata } from 'sharp'
 import type { MediaVariant } from '@/lib/db/schema'
 
 export const MAX_UPLOAD_BYTES = 4 * 1024 * 1024 // fits within serverless request limits
@@ -28,7 +28,7 @@ export async function processImage(input: Buffer, mediaId: string): Promise<Proc
     throw new MediaValidationError(`Images must be ${Math.round(MAX_UPLOAD_BYTES / 1024 / 1024)} MB or smaller.`)
   }
 
-  let meta: sharp.Metadata
+  let meta: Metadata
   try {
     meta = await sharp(input, { limitInputPixels: MAX_INPUT_PIXELS }).metadata()
   } catch {
