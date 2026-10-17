@@ -1,4 +1,4 @@
-import { expect, type Page } from '@playwright/test'
+import { expect, type BrowserContext, type Page } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
 
 export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? 'admin@ravenwebstudio.test'
@@ -15,17 +15,35 @@ export function watchConsole(page: Page): string[] {
   return errors
 }
 
+/**
+ * Session cookies from earlier sign-ins in this test run. The app rate-limits
+ * sign-in attempts per account (10 per 15 minutes), so tests reuse a valid
+ * session instead of signing in again for every test.
+ */
+const cachedSessions = new Map<string, Awaited<ReturnType<BrowserContext['cookies']>>>()
+
 export async function login(page: Page, email = ADMIN_EMAIL, password = ADMIN_PASSWORD) {
+  const cached = cachedSessions.get(email)
+  if (cached) {
+    await page.context().addCookies(cached)
+    await page.goto('/admin')
+    if (new URL(page.url()).pathname === '/admin') return
+    await page.context().clearCookies()
+    cachedSessions.delete(email)
+  }
   await page.goto('/admin/login')
   await page.getByLabel('E-mail address').fill(email)
   await page.getByLabel('Password').fill(password)
   await page.getByRole('button', { name: 'Sign in' }).click()
   await expect(page).toHaveURL(/\/admin$/)
+  const cookies = await page.context().cookies()
+  cachedSessions.set(email, cookies.filter((c) => c.name.includes('rws_session')))
 }
 
 export async function logout(page: Page) {
   await page.getByRole('button', { name: 'Sign out' }).click()
   await expect(page).toHaveURL(/\/admin\/login/)
+  cachedSessions.clear()
 }
 
 export async function expectNoSeriousA11yIssues(page: Page, label: string) {

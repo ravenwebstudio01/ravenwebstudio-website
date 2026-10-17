@@ -87,5 +87,6 @@ Add a `security.txt` (`public/.well-known/security.txt`) with a contact address 
 ## Known limitations
 
 - No multi-factor authentication for dashboard accounts yet (recommended next step: TOTP).
+- The per-account limits (temporary lock and 10 attempts per 15 minutes) also count attempts by other people, so someone who knows an administrator's e-mail address can delay that person's sign-in for up to 15 minutes at a time. This is the usual trade-off of account-based throttling; multi-factor authentication would allow relaxing it.
 - Rate limits are stored in PostgreSQL (fixed window). This is adequate for a studio website; a high-traffic deployment would use a dedicated store or the hosting provider's firewall.
 - No external penetration test has been performed.
